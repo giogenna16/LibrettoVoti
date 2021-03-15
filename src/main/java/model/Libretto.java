@@ -1,21 +1,24 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+
 
 public class Libretto {
 	
-	private Set<Voto> voti;
+	private List<Voto> voti;
+	private Map<String, Voto> votiMap;
 	
 	public Libretto() {
-		this.voti= new HashSet<>();
-		
+		this.voti= new ArrayList<>();
+		this.votiMap= new HashMap<>();
 	}
 
 	public void add(Voto v) {
 		this.voti.add(v);
+		this.votiMap.put(v.getNome(), v);
 		
 	}
 	
@@ -38,21 +41,7 @@ public class Libretto {
 		
 	}
 	
-	/*public List<Voto> votiUguali2(int punteggio){
-		
 	
-		List<Voto> risultato= new ArrayList<>();
-		
-		for(Voto v: this.voti) {
-			if(v.getVoto()==punteggio)
-			   risultato.add(v);
-		
-			
-		
-		
-		}
-		return risultato;
-	}*/
 	/**
 	 * Ricerca un Voto del corso di cui è specificato il nome
 	 * se il corso non esiste: null
@@ -61,40 +50,32 @@ public class Libretto {
 	 */
 	
 	public Voto ricercaCorso(String nomeCorso) {
-		Voto risultato= null;
-		for(Voto v: this.voti) {
-			if(v.getNome().equals(nomeCorso)) {
-				risultato =v;
-				break;
-			}
-		}
-		return risultato;
+		return this.votiMap.get(nomeCorso);
 	}
 	
 	public boolean controlloPresenteNomeVoto(Voto daAggiungere){
-		boolean presente= false;
 		
-		for(Voto v: this.voti) {
-			if(v.getVoto()== daAggiungere.getVoto() && v.getNome().equals(daAggiungere.getNome())) {
-				presente = true;
-				break;
-			}
-		}
 		
-		return presente;	
+		Voto trovato= this.votiMap.get(daAggiungere.getNome());
+		
+		if(trovato==null)
+			return false;
+		if(trovato.getVoto()==daAggiungere.getVoto())
+			return true;
+		else
+			return false;
 	}
 	
 	public boolean controlloPresenteNome(Voto daAggiungere){
-        boolean presente= false;
+        
+		Voto trovato= this.votiMap.get(daAggiungere.getNome());
 		
-		for(Voto v: this.voti) {
-			if(v.getVoto()!= daAggiungere.getVoto() && v.getNome().equals(daAggiungere.getNome())) {
-				presente = true;
-				break;
-			}
-		}
-		
-		return presente;	
+		if(trovato==null)
+			return false;
+		if(trovato.getVoto()!=daAggiungere.getVoto())
+			return true;
+		else
+			return false;
 		
 	}
 	
