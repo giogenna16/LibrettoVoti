@@ -1,14 +1,16 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Libretto {
 	
-	private List<Voto> voti;
+	private Set<Voto> voti;
 	
 	public Libretto() {
-		this.voti= new ArrayList<>();
+		this.voti= new HashSet<>();
 		
 	}
 
@@ -36,7 +38,7 @@ public class Libretto {
 		
 	}
 	
-	public List<Voto> votiUguali2(int punteggio){
+	/*public List<Voto> votiUguali2(int punteggio){
 		
 	
 		List<Voto> risultato= new ArrayList<>();
@@ -50,5 +52,51 @@ public class Libretto {
 		
 		}
 		return risultato;
+	}*/
+	/**
+	 * Ricerca un Voto del corso di cui è specificato il nome
+	 * se il corso non esiste: null
+	 * @param nomeCorso
+	 * @return
+	 */
+	
+	public Voto ricercaCorso(String nomeCorso) {
+		Voto risultato= null;
+		for(Voto v: this.voti) {
+			if(v.getNome().equals(nomeCorso)) {
+				risultato =v;
+				break;
+			}
+		}
+		return risultato;
 	}
+	
+	public boolean controlloPresenteNomeVoto(Voto daAggiungere){
+		boolean presente= false;
+		
+		for(Voto v: this.voti) {
+			if(v.getVoto()== daAggiungere.getVoto() && v.getNome().equals(daAggiungere.getNome())) {
+				presente = true;
+				break;
+			}
+		}
+		
+		return presente;	
+	}
+	
+	public boolean controlloPresenteNome(Voto daAggiungere){
+        boolean presente= false;
+		
+		for(Voto v: this.voti) {
+			if(v.getVoto()!= daAggiungere.getVoto() && v.getNome().equals(daAggiungere.getNome())) {
+				presente = true;
+				break;
+			}
+		}
+		
+		return presente;	
+		
+	}
+	
+	
 }

@@ -1,25 +1,52 @@
 package it.polito.tdp.librettovoti;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.time.LocalDate;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import model.Libretto;
+import model.Voto;
 
-public class FXMLController implements Initializable {
-    
+public class FXMLController {
+	
+	Libretto model = new Libretto();
+
     @FXML
-    private Label label;
-    
+    private Button btnInserisci;
+
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+    private TextField txtNome;
+
+    @FXML
+    private TextField txtVoto;
+
+    @FXML
+    private TextField txtData;
+
+    @FXML
+    private TextArea txtRisultato;
+
+    @FXML
+    void handleInserisci(ActionEvent event) {
+    	String nomeEsame= txtNome.getText();
+    	String votoEsame= txtVoto.getText();
+    	int votoInt= Integer.parseInt(votoEsame);
+    	String dataEsame= txtData.getText();
+    	LocalDate data= LocalDate.parse(dataEsame);
+    	
+    	Voto voto= new Voto(nomeEsame, votoInt, data);
+    	model.add(voto);
+    	
+    	txtRisultato.setText(model.toString());
+    	
     }
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public void setModel(Libretto model) {
+    	this.model= model;
+    }
+
 }
+
